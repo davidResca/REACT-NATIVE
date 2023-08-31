@@ -1,37 +1,99 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Pressable, Image } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View, Pressable, Image, FlatList, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 export default function App() {
+
+  const initialList = [
+    { id: 1, text: 'peras' },
+    { id: 2, text: 'Manzanas' },
+    { id: 3, text: 'Mangos' },
+  ]
+
+  const [texto, setTexto] = useState("");
+  const [list, setList] = useState(initialList);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handlePress = () => {
+    list.push({
+      id: Math.random(),
+      text: texto,
+    })
+    setList(list)
+    setTexto("");
+    //console.log(list);
+  }
+
+  const handleModal = (boolean) => setModalVisible(boolean);
+
+  const clearList = () => {
+    setList([]);
+    setModalVisible(false);
+  }
+  
+
+  console.log(texto);
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.topImg}
-        source={{ uri: "https://images.pexels.com/photos/3593865/pexels-photo-3593865.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" }} />
-      
+
+      <Modal
+      style={styles.modalDelete}
+        animationType='slide'
+        /* transparent={true} */
+        visible={modalVisible}>
+        <View>
+          <Text>¿Vas a borrar la lista completa?</Text>
+
+          <Pressable onPress={clearList}>
+            <Text>SI</Text>
+          </Pressable>
+          <Pressable onPress={()=> handleModal(false)}>
+            <Text>NO</Text>
+          </Pressable>
+        </View>
+      </Modal>
+
+      <Image style={styles.topImg} source={{ uri: "https://images.pexels.com/photos/3593865/pexels-photo-3593865.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" }} />
       <Text style={styles.titulo}>Lista de compras</Text>
 
       <View style={styles.buttonContainer}>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="Escriba aqui..." />
+          <TextInput
+            style={styles.input}
+            value={texto}
+            onChangeText={(value) => setTexto(value)}
+            placeholder="Escriba aqui..." />
         </View>
 
-        <Pressable style={styles.button}>
+        <Pressable
+          style={styles.button}
+          onPress={handlePress}>
           <Ionicons name="add-circle-outline" size={35} />
         </Pressable>
       </View>
 
       <View style={styles.listContainer}>
-        <View style={styles.listItem}>
-          <Text style={styles.listText}>Peras</Text>
-        </View>
-        <View style={styles.listItem}>
-          <Text style={styles.listText}>Bananas</Text>
-        </View>
-        <View style={styles.listItem}>
-          <Text style={styles.listText}>Queso</Text>
-        </View>
+        {
+          /* list.map(el => (<View key={el.id} style={styles.listItem}>
+            <Text style={styles.listText}>{el.text}</Text>
+          </View>)) */
+
+          <FlatList
+            data={list}
+            keyExtractor={item => item.id}
+            renderItem={
+              ({ item }) => <View style={styles.listItem}>
+                <Text style={styles.listText}>{item.text}</Text>
+              </View>
+            } />
+        }
       </View>
+                <Pressable style={styles.delButton} onPress={()=> handleModal(true)}>
+                  <MaterialIcons name="delete" size={24} color="black" />
+                </Pressable>
     </View>
   );
 }
@@ -86,6 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 45,
     padding: 10,
+    marginBottom: 10,
     borderRadius: 10,
     borderWidth: 1,
   },
@@ -96,6 +159,12 @@ const styles = StyleSheet.create({
     marginTop: 70,
     width: 340,
     height: 140,
-    borderRadius: 14,    
-  }
+    borderRadius: 14,
+  },
+  delButton: {
+    marginTop:20,
+    borderWidth: 2,
+    padding:8,
+    borderRadius:50,
+  },
 });
