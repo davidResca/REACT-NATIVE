@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import AddItem from './src/components/AddItem';
@@ -8,19 +8,42 @@ import CustomModal from './src/components/CustomModal';
 export default function App() {
 
   const initialList = [
-    { id: 1, text: 'peras' },
-    { id: 2, text: 'Manzanas' },
-    { id: 3, text: 'Mangos' },
+    { id: 1, text: 'peras', done: false },
+    { id: 2, text: 'Manzanas', done: false },
+    { id: 3, text: 'Mangos', done: false },
   ];
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const handleModal = (boolean) => setModalVisible(boolean);
-
   const [list, setList] = useState(initialList);
+  // CRUD
+  //CREAR ITEM
+  const createItem = (texto) => {
+    const newItem = {
+      id: Math.random(),
+      text: texto,
+      done: false,
+    }
+    setList([...list, newItem])
+  }  
+  //UPDATE ITEM DONE !DONE
+  const updateItem = (id) => {
+    setList(
+      list.map((item) => item.id === id ? { ...item, done: !item.done } : item)
+    );
+  };
+  // ELIMINAR ITEM DE LA LISTA
+  const clearItem = (id) => {
+    console.log('clear item ' + id);
+    setList(list.filter(i => i.id !== id))
+  }
+  //BORRAR LISTA COMPLETA
   const clearList = () => {
     setList([]);
     setModalVisible(false);
-  }
+  };
+
+  //MODAL
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleModal = (boolean) => setModalVisible(boolean);
 
   return (
     <View style={styles.container}>
@@ -29,9 +52,8 @@ export default function App() {
 
       <Image style={styles.topImg} source={{ uri: "https://images.pexels.com/photos/3593865/pexels-photo-3593865.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" }} />
       <Text style={styles.titulo}>Lista de compras</Text>
-
-      <AddItem list={list} setList={setList} />
-      <ListContainer list={list} />
+      <AddItem createItem={createItem} />
+      <ListContainer updateItem={updateItem} clearItem={clearItem} list={list} />
 
       <Pressable
         style={styles.delButton}
@@ -42,7 +64,6 @@ export default function App() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -57,25 +78,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     borderBottomWidth: 2,
     borderColor: 'red'
-  },
-  listContainer: {
-    width: 340,
-    marginTop: 40,
-    borderRadius: 14,
-    borderWidth: 1,
-    padding: 10,
-    gap: 10,
-  },
-  listItem: {
-    justifyContent: 'center',
-    minHeight: 45,
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-  },
-  listText: {
-    textTransform: 'uppercase'
   },
   topImg: {
     marginTop: 70,

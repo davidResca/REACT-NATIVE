@@ -4,16 +4,16 @@ import React from 'react'
 const CustomModal = ({modalVisible, clearList, handleModal}) => {
   return (
     <Modal
-        animationType='slide'
+        animationType='fade'
         transparent={true}
         visible={modalVisible}>
         <View style={styles.modalView}>
           <Text style={styles.modalTitle}>¿Vas a borrar la lista completa?</Text>
           <View style={styles.modalButtonContainer}>
-            <Pressable style={styles.modalButton} onPress={clearList}>
+            <Pressable style={styles.modalButtonSI} onPress={clearList}>
               <Text>SI</Text>
             </Pressable>
-            <Pressable style={styles.modalButton} onPress={() => handleModal(false)}>
+            <Pressable style={styles.modalButtonNO} onPress={() => handleModal(false)}>
               <Text>NO</Text>
             </Pressable>
           </View>
@@ -26,12 +26,13 @@ export default CustomModal;
 
 const styles = StyleSheet.create({
     modalView: {
-      alignSelf: 'center',
+      flex:1,
       margin: 20,
       backgroundColor: 'white',
-      borderRadius: 20,
+      borderRadius: 25,
       padding: 35,
       alignItems: 'center',
+      justifyContent: 'center',
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -51,15 +52,24 @@ const styles = StyleSheet.create({
       marginTop: 25,
       //justifyContent: 'space-evenly'
     },
-    modalButton: {
-      borderWidth: 1,
+    modalButtonSI: {
       padding: 4,
       justifyContent: 'center',
       alignItems: 'center',
       width: 40,
       height: 40,
       borderRadius: 50,
-  
+      backgroundColor: 'rgb(219, 77, 77)'
+    },
+    modalButtonNO:{
+      padding: 4,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 40,
+      height: 40,
+      borderRadius: 50,
+      backgroundColor: 'lightgreen'
     }
+    
   });
   

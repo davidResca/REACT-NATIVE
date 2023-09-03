@@ -2,17 +2,12 @@ import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
-const AddItem = ({ list, setList }) => {
+const AddItem = ({ createItem }) => {
     const [texto, setTexto] = useState("");
 
     const handlePress = () => {
-        list.push({
-            id: Math.random(),
-            text: texto,
-        })
-        setList(list)
+        createItem(texto)
         setTexto("");
-        //console.log(list);
     }
 
     return (

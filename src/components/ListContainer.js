@@ -2,15 +2,16 @@ import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import ListItem from './ListItem';
 
-const ListContainer = ({ list }) => {
+const ListContainer = ({ list, clearItem, updateItem }) => {
+
 
     return (
-        <View style={styles.listContainer}>
+        <View style={[styles.listContainer, list.length === 0 && styles.listNoBorder]}>
             {
                 <FlatList
                     data={list}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <ListItem item={item} />}
+                    renderItem={({ item }) => <ListItem  updateItem={updateItem} clearItem={clearItem} item={item} />}
                 />
             }
         </View>
@@ -29,4 +30,7 @@ const styles = StyleSheet.create({
         padding: 10,
         gap: 10,
     },
+    listNoBorder: {
+        borderWidth: 0,
+    }
 });
