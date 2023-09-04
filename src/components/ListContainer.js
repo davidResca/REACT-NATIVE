@@ -26,10 +26,10 @@ export default ListContainer;
 const styles = StyleSheet.create({
     listContainer: {
         flex:1,
-        width: 340,
+        width: 355,
         marginTop: 10,
-        borderRadius: 14,
-        borderWidth: 1,
+        /* borderRadius: 14,
+        borderWidth: 1, */
         padding: 10,
         gap: 10,
     },
