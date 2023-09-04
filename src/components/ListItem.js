@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import React, { useState } from 'react'
+import React from 'react'
 
 const ListItem = ({ item, clearItem, updateItem }) => {
 
