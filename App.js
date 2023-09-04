@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   titulo: {
-    marginTop: 40,
-    fontSize: 30,
+    marginTop: 30,
+    fontSize: 25,
     borderBottomWidth: 2,
     borderColor: 'red'
   },
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   delButton: {
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom:10,
     borderWidth: 2,
     padding: 8,
     borderRadius: 50,

@@ -16,7 +16,6 @@ const ListItem = ({ item, clearItem, updateItem }) => {
     return (
         <View style={[styles.listItem, item.done && styles.doneListItem]}>
             <Text style={styles.listText}>{item.text}</Text>
-
             <View style={styles.buttonContainer}>
                 {/* DEL BUTTON */}
                 <Pressable onPress={() => handlePressDelete(item.id)}>
